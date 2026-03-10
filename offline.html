@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="description" content="You are offline. Turn on mobile data or connect to Wi-Fi to use ASTUBE."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta property="og:title"  content="Offline — ASTUBE"/>
+<meta property="og:image"  content="icon.png"/>
+<meta name="twitter:card"  content="summary"/>
+<link rel="canonical"      href="offline.html"/>
+<link rel="icon" type="image/png" href="icon.png"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="theme-color" content="#00c864"/>
+<link rel="manifest" href="manifest.json"/>
+<title>You're Offline - ASTUBE</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:#0a0a0a;color:#fff;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.card{
+  text-align:center;
+  max-width:340px;width:100%;
+  animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.85) translateY(20px)}to{opacity:1;transform:none}}
+
+/* Icon */
+.icon-wrap{
+  position:relative;
+  width:100px;height:100px;
+  margin:0 auto 24px;
+}
+.app-icon{
+  width:100px;height:100px;
+  border-radius:24px;
+  object-fit:cover;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+.wifi-badge{
+  position:absolute;bottom:-6px;right:-6px;
+  width:34px;height:34px;
+  background:#1a1a1a;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:2px solid #0a0a0a;
+}
+
+/* Text */
+h1{font-size:22px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em}
+h1 span{color:#00c864}
+.tagline{
+  font-size:14px;color:rgba(255,255,255,.45);
+  margin-bottom:28px;line-height:1.6;
+}
+
+/* Steps */
+.steps{
+  background:#141414;
+  border-radius:16px;
+  padding:18px 20px;
+  margin-bottom:24px;
+  text-align:left;
+}
+.steps-title{
+  font-size:11px;font-weight:700;
+  color:rgba(255,255,255,.3);
+  letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+.step{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.step:last-child{border-bottom:none}
+.step-icon{
+  width:36px;height:36px;flex-shrink:0;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;
+}
+.step-icon.green{background:rgba(0,200,100,.12)}
+.step-icon.blue{background:rgba(80,160,255,.12)}
+.step-text strong{display:block;font-size:13px;font-weight:600;margin-bottom:2px}
+.step-text span{font-size:12px;color:rgba(255,255,255,.35)}
+
+/* Retry button */
+.retry-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;
+  background:#00c864;color:#000;
+  border:none;border-radius:12px;
+  font-size:14px;font-weight:800;
+  cursor:pointer;
+  transition:transform .15s,background .15s;
+  width:100%;justify-content:center;
+  margin-bottom:12px;
+}
+.retry-btn:active{transform:scale(.97)}
+.retry-btn:hover{background:#00e070}
+
+.home-link{
+  display:block;
+  font-size:13px;color:rgba(255,255,255,.3);
+  text-decoration:none;
+  padding:6px;
+}
+.home-link:hover{color:rgba(255,255,255,.6)}
+
+/* Status dot */
+.status-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:6px;margin-bottom:20px;
+  font-size:12px;color:rgba(255,255,255,.3);
+}
+.dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#e00;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.dot.online{background:#00c864;animation:none}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- App icon + wifi badge -->
+  <div class="icon-wrap">
+    <img class="app-icon" src="icon.png" alt="ASTUBE"
+         onerror="this.style.background='#1a1a1a'"/>
+    <div class="wifi-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+           stroke="#e00" stroke-width="2.5" stroke-linecap="round">
+        <line x1="2" y1="2" x2="22" y2="22"/>
+        <path d="M8.5 16.5a5 5 0 0 1 7 0"/>
+        <path d="M5 12.5a10 10 0 0 1 5.17-2.68"/>
+        <path d="M10.71 5.05A16 16 0 0 1 22.56 9"/>
+        <path d="M1.42 9a16 16 0 0 1 4.7-2.88"/>
+        <path d="M12 20h.01"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Heading -->
+  <h1>Oops! No Internet <span>:(</span></h1>
+
+  <!-- Status -->
+  <div class="status-row">
+    <div class="dot" id="status-dot"></div>
+    <span id="status-text">You are currently offline</span>
+  </div>
+
+  <p class="tagline">
+    ASTUBE needs a connection to stream videos.<br>
+    Don't worry — here's how to get back:
+  </p>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="steps-title">Quick Fix</div>
+
+    <div class="step">
+      <div class="step-icon green">📶</div>
+      <div class="step-text">
+        <strong>Turn on Mobile Data</strong>
+        <span>Settings → Mobile Network → Enable</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-icon blue">📡</div>
+      <div class="step-text">
+        <strong>Connect to Wi-Fi</strong>
+        <span>Settings → Wi-Fi → Choose a network</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-icon green">✈️</div>
+      <div class="step-text">
+        <strong>Disable Airplane Mode</strong>
+        <span>Make sure it's switched off</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retry -->
+  <button class="retry-btn" onclick="retryConnection()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <polyline points="23 4 23 10 17 10"/>
+      <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+    </svg>
+    Try Again
+  </button>
+
+  <a href="index.html" class="home-link">← Back to ASTUBE</a>
+
+</div>
+
+<script>
+function retryConnection() {
+  const btn = document.querySelector('.retry-btn');
+  btn.textContent = 'Checking…';
+  btn.style.background = '#555';
+  btn.style.color = '#fff';
+
+  setTimeout(() => {
+    if (navigator.onLine) {
+      // Back online — go home
+      location.href = 'index.html';
+    } else {
+      btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Try Again';
+      btn.style.background = '#00c864';
+      btn.style.color = '#000';
+    }
+  }, 1200);
+}
+
+// Auto-detect when connection comes back
+window.addEventListener('online', () => {
+  document.getElementById('status-dot').className  = 'dot online';
+  document.getElementById('status-text').textContent = 'Connection restored!';
+  document.getElementById('status-text').style.color = '#00c864';
+  setTimeout(() => location.href = 'index.html', 1000);
+});
+
+// Check on load
+if (navigator.onLine) {
+  location.href = 'index.html';
+}
+</script>
+</body>
+</html>

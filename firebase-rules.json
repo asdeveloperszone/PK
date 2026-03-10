@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "config": {
+      "backendUrl": {
+        ".read": true,
+        ".write": true
+      }
+    },
+    "videos": {
+      ".read": true,
+      ".write": true,
+      "$videoId": {
+        "views": {
+          ".write": true
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid",
+        "name": {
+          ".read": true
+        },
+        "photoUrl": {
+          ".read": true
+        }
+      }
+    }
+  }
+}
